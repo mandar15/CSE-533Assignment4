@@ -1,0 +1,44 @@
+LIBS_PATH = /home/users/cse533/Stevens/unpv13e
+
+CC = gcc
+
+LIBS = -lpthread\
+	${LIBS_PATH}/libunp.a\
+
+FLAGS = -g -O2
+
+CFLAGS = ${FLAGS} -I${LIBS_PATH}/lib
+
+all: tour test ping
+
+tour: tour.o get_hw_addrs.o utils.o
+	${CC} -o tour tour.o get_hw_addrs.o utils.o  ${LIBS}
+
+tour.o: tour.c
+	${CC} ${CFLAGS} -c tour.c
+
+
+ping: ping.o get_hw_addrs.o utils.o
+	${CC} -o ping ping.o get_hw_addrs.o utils.o  ${LIBS}
+
+ping.o: pingmain.c
+	${CC} ${CFLAGS} -c pingmain.c
+
+test: test.o get_hw_addrs.o utils.o
+	${CC} -o test test.o get_hw_addrs.o utils.o  ${LIBS}
+
+test.o: test.c
+	${CC} ${CFLAGS} -c test.c
+
+utils.o: utils.c
+	${CC} ${CFLAGS} -c utils.c 
+
+get_hw_addrs.o: get_hw_addrs.c
+	${CC} ${FLAGS} -c get_hw_addrs.c
+
+readloop.o: readloop.c
+	${CC} ${FLAGS} -c readloop.c
+	
+clean:
+	rm test ping tour *.o
+
